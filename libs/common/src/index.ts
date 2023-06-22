@@ -1,2 +1,2 @@
-export * from './common.module';
-export * from './common.service';
+export * from './dto/pagination.dto';
+export * from './interface/pagination.interface';

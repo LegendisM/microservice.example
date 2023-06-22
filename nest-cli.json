@@ -1,11 +1,11 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/microservice.example/src",
+  "sourceRoot": "apps/gateway/src",
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/microservice.example/tsconfig.app.json"
+    "tsConfigPath": "apps/gateway/tsconfig.app.json"
   },
   "projects": {
     "common": {
@@ -15,6 +15,15 @@
       "sourceRoot": "libs/common/src",
       "compilerOptions": {
         "tsConfigPath": "libs/common/tsconfig.lib.json"
+      }
+    },
+    "rabbit": {
+      "type": "library",
+      "root": "libs/rabbit",
+      "entryFile": "index",
+      "sourceRoot": "libs/rabbit/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/rabbit/tsconfig.lib.json"
       }
     },
     "gateway": {
