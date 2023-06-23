@@ -43,6 +43,11 @@ export class RabbitModule {
           clients: [
             {
               name: service,
+              imports: [
+                ConfigModule.forRoot({
+                  envFilePath: './.env'
+                })
+              ],
               useFactory: (configService: ConfigService) => ({
                 transport: Transport.RMQ,
                 options: {

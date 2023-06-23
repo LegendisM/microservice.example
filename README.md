@@ -36,13 +36,12 @@ $ npm install
 
 ```bash
 # development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
+$ docker-compose -f docker-compose.local.yaml build
+$ docker-compose -f docker-compose.local.yaml up
 
 # production mode
-$ npm run start:prod
+$ docker-compose build
+$ docker-compose up
 ```
 
 ## Test

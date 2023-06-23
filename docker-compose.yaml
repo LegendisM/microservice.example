@@ -1,0 +1,72 @@
+version: '3.9'
+
+services:
+  gateway:
+    container_name: gateway_service
+    build:
+      context: .
+      target: production
+      dockerfile: ./apps/gateway/Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "${GATEWAY_PORT}:${GATEWAY_PORT}"
+    depends_on:
+      - user
+      - auth
+      - profile
+      - vehicle
+      - report
+  user:
+    container_name: user_service
+    build:
+      context: .
+      target: production
+      dockerfile: ./apps/user/Dockerfile
+    depends_on:
+      - rabbit
+  auth:
+    container_name: auth_service
+    build:
+      context: .
+      target: production
+      dockerfile: ./apps/auth/Dockerfile
+    depends_on:
+      - rabbit
+  profile:
+    container_name: profile_service
+    build:
+      context: .
+      target: production
+      dockerfile: ./apps/profile/Dockerfile
+    depends_on:
+      - rabbit
+  vehicle:
+    container_name: vehicle_service
+    build:
+      context: .
+      target: production
+      dockerfile: ./apps/vehicle/Dockerfile
+    depends_on:
+      - rabbit
+  report:
+    container_name: report_service
+    build:
+      context: .
+      target: production
+      dockerfile: ./apps/report/Dockerfile
+    depends_on:
+      - rabbit
+  rabbit:
+    container_name: rabbit
+    image: bitnami/rabbitmq
+    environment:
+      - RABBITMQ_USERNAME=${RABBIT_MQ_USERNAME}
+      - RABBITMQ_PASSWORD=${RABBIT_MQ_PASSWORD}
+      - RABBITMQ_NODE_PORT_NUMBER=${RABBIT_MQ_PORT}
+    ports:
+      - "${RABBIT_MQ_PORT}:${RABBIT_MQ_PORT}"
+
+volumes:
+  data:
+    driver: local
