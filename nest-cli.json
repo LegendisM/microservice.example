@@ -79,6 +79,24 @@
       "compilerOptions": {
         "tsConfigPath": "apps/report/tsconfig.app.json"
       }
+    },
+    "database": {
+      "type": "library",
+      "root": "libs/database",
+      "entryFile": "index",
+      "sourceRoot": "libs/database/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/database/tsconfig.lib.json"
+      }
+    },
+    "language": {
+      "type": "library",
+      "root": "libs/language",
+      "entryFile": "index",
+      "sourceRoot": "libs/language/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/language/tsconfig.lib.json"
+      }
     }
   },
   "monorepo": true,

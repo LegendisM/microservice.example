@@ -29,6 +29,18 @@
       ],
       "@app/rabbit/*": [
         "libs/rabbit/src/*"
+      ],
+      "@app/database": [
+        "libs/database/src"
+      ],
+      "@app/database/*": [
+        "libs/database/src/*"
+      ],
+      "@app/language": [
+        "libs/language/src"
+      ],
+      "@app/language/*": [
+        "libs/language/src/*"
       ]
     }
   }
