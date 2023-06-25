@@ -36,9 +36,6 @@ export class RabbitModule {
     return {
       module: RabbitModule,
       imports: [
-        ConfigModule.forRoot({
-          envFilePath: './.env'
-        }),
         ClientsModule.registerAsync({
           clients: [
             {

@@ -10,11 +10,12 @@ import { USER_MESSAGE_PATTERNS } from 'apps/user/src/constant/user-patterns.cons
 import { UserEntity } from 'apps/user/src/entity/user.entity';
 import { firstValueFrom } from 'rxjs';
 import { IPagination, PaginationDto } from '@app/common';
+import { Database } from '@app/database';
 
 @Injectable()
 export class VehicleService {
   constructor(
-    @InjectRepository(VehicleEntity) private vehicleRepository: Repository<VehicleEntity>,
+    @InjectRepository(VehicleEntity, Database.PRIMARY) private vehicleRepository: Repository<VehicleEntity>,
     @Inject(RabbitServiceName.VEHICLE) private userClient: ClientProxy
   ) { }
 

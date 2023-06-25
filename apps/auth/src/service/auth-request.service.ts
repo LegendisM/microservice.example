@@ -2,11 +2,12 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository, LessThanOrEqual } from "typeorm";
 import { AuthRequestEntity } from "../entity/auth-request.entity";
+import { Database } from "@app/database";
 
 @Injectable()
 export class AuthRequestService {
     constructor(
-        @InjectRepository(AuthRequestEntity) private authRequestRepository: Repository<AuthRequestEntity>
+        @InjectRepository(AuthRequestEntity, Database.PRIMARY) private authRequestRepository: Repository<AuthRequestEntity>
     ) { }
 
     async create(phone: string): Promise<AuthRequestEntity> {

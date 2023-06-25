@@ -7,11 +7,12 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import _ from 'lodash';
 import { IServiceResponse } from '@app/rabbit';
 import { IPagination, PaginationDto } from '@app/common';
+import { Database } from '@app/database';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>
+    @InjectRepository(UserEntity, Database.PRIMARY) private userRepository: Repository<UserEntity>
   ) { }
 
   async create(createDto: CreateUserDto): Promise<IServiceResponse<UserEntity>> {
