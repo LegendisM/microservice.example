@@ -14,9 +14,6 @@ export class UserEntity {
     @Column()
     username: string;
 
-    @Column()
-    password: string;
-
     @Column({
         type: 'simple-array',
         default: [Role.USER],
@@ -26,4 +23,13 @@ export class UserEntity {
         }
     })
     role: Role[];
+
+    @Column()
+    email: string;
+
+    @Column()
+    nationalcode: string;
+
+    @Column()
+    birthday: Date;
 }

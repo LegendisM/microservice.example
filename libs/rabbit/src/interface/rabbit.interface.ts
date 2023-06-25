@@ -4,4 +4,5 @@ export enum RabbitServiceName {
     PROFILE = "PROFILE_SERVICE",
     VEHICLE = "VEHICLE_SERVICE",
     REPORT = "REPORT_SERVICE",
+    OTP = "OTP_SERVICE"
 }

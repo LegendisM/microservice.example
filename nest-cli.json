@@ -97,6 +97,24 @@
       "compilerOptions": {
         "tsConfigPath": "libs/language/tsconfig.lib.json"
       }
+    },
+    "token": {
+      "type": "library",
+      "root": "libs/token",
+      "entryFile": "index",
+      "sourceRoot": "libs/token/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/token/tsconfig.lib.json"
+      }
+    },
+    "otp": {
+      "type": "application",
+      "root": "apps/otp",
+      "entryFile": "main",
+      "sourceRoot": "apps/otp/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/otp/tsconfig.app.json"
+      }
     }
   },
   "monorepo": true,

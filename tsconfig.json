@@ -41,6 +41,12 @@
       ],
       "@app/language/*": [
         "libs/language/src/*"
+      ],
+      "@app/token": [
+        "libs/token/src"
+      ],
+      "@app/token/*": [
+        "libs/token/src/*"
       ]
     }
   }

@@ -1,0 +1,7 @@
+{
+    "created": "User successfully created",
+    "updated": "User updated successfully",
+    "update-fail": "Error updating user",
+    "found": "User found successfully",
+    "notfound": "User not found"
+}

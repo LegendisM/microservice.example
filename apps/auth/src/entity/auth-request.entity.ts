@@ -25,4 +25,10 @@ export class AuthRequestEntity {
         default: () => addMinutes(new Date(), AUTH_REQUEST_EXPIRE_TIME)
     })
     expire: Date;
+
+    @Column({ default: false })
+    send: boolean;
+
+    @Column({ default: false })
+    use: boolean;
 }

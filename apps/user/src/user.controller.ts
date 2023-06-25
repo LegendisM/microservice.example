@@ -19,12 +19,12 @@ export class UserController {
   }
 
   @MessagePattern(USER_MESSAGE_PATTERNS.USER_FIND_BY_ID)
-  async getUserById(@Payload('id') id: string): Promise<IServiceResponse<UserEntity>> {
+  async getUserById(@Payload() id: string): Promise<IServiceResponse<UserEntity>> {
     return await this.userService.findById(id);
   }
 
   @MessagePattern(USER_MESSAGE_PATTERNS.USER_FIND_BY_PHONE)
-  async getUserByPhone(@Payload('phone') phone: string): Promise<IServiceResponse<UserEntity>> {
+  async getUserByPhone(@Payload() phone: string): Promise<IServiceResponse<UserEntity>> {
     return await this.userService.findByPhone(phone);
   }
 

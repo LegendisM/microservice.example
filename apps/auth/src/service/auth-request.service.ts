@@ -6,8 +6,7 @@ import { AuthRequestEntity } from "../entity/auth-request.entity";
 @Injectable()
 export class AuthRequestService {
     constructor(
-        @InjectRepository(AuthRequestEntity) private authRequestRepository: Repository<AuthRequestEntity>,
-        private authRequestService: AuthRequestService
+        @InjectRepository(AuthRequestEntity) private authRequestRepository: Repository<AuthRequestEntity>
     ) { }
 
     async create(phone: string): Promise<AuthRequestEntity> {
@@ -15,10 +14,20 @@ export class AuthRequestService {
         return await this.authRequestRepository.save(authRequest);
     }
 
+    async findById(id: string): Promise<AuthRequestEntity> {
+        return await this.authRequestRepository.findOneBy({ id });
+    }
+
     async findByPhone(phone: string): Promise<AuthRequestEntity> {
         return await this.authRequestRepository.findOneBy({
             phone,
             expire: LessThanOrEqual(new Date())
         });
+    }
+
+    async update(id: string, updateDto: Partial<AuthRequestEntity>): Promise<AuthRequestEntity> {
+        const authRequest = await this.findById(id);
+        Object.assign(authRequest, updateDto);
+        return await this.authRequestRepository.save(authRequest);
     }
 }

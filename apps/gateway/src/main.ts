@@ -7,6 +7,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { ConfigService } from '@nestjs/config';
 import { ClassSerializerInterceptor, ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { HttpExceptionFilter } from "@app/common";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(GatewayModule);
@@ -20,6 +21,7 @@ async function bootstrap() {
   app.enableVersioning({ type: VersioningType.URI });
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   // * middlewares
   app.use(compression());

@@ -1,15 +1,15 @@
 import { NestFactory } from '@nestjs/core';
-import { ReportModule } from './report.module';
+import { OtpModule } from './otp.module';
 import { MicroserviceOptions } from '@nestjs/microservices';
 import { RABBIT_SERVICE_OPTIONS } from '@app/rabbit';
 
 async function bootstrap() {
-  const app = await NestFactory.create(ReportModule);
+  const app = await NestFactory.create(OtpModule);
 
   // * setup
   app.connectMicroservice<MicroserviceOptions>(app.get<MicroserviceOptions>(RABBIT_SERVICE_OPTIONS));
 
-  // * start
+  // * run
   await app.startAllMicroservices();
 }
 bootstrap();
