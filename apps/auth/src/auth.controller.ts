@@ -16,22 +16,22 @@ export class AuthController {
     private authTokenService: AuthTokenService
   ) { }
 
-  @MessagePattern(AUTH_MESSAGE_PATTERNS.AUTH_START)
+  @MessagePattern(AUTH_MESSAGE_PATTERNS.START)
   async startAuthentication(@Payload() startDto: StartAuthDto): Promise<IServiceResponse<AuthRequestEntity>> {
     return await this.authService.start(startDto);
   }
 
-  @MessagePattern(AUTH_MESSAGE_PATTERNS.AUTH_VALIDATE)
+  @MessagePattern(AUTH_MESSAGE_PATTERNS.VALIDATE)
   async validateAuthentication(@Payload() validateDto: ValidateAuthDto): Promise<IServiceResponse<AuthRequestEntity>> {
     return await this.authService.validate(validateDto);
   }
 
-  @MessagePattern(AUTH_MESSAGE_PATTERNS.AUTH_CREATE_TOKEN)
+  @MessagePattern(AUTH_MESSAGE_PATTERNS.CREATE_TOKEN)
   async createToken(@Payload() payload: IJwtPayload): Promise<IServiceResponse<IJwtToken>> {
     return await this.authTokenService.create(payload);
   }
 
-  @MessagePattern(AUTH_MESSAGE_PATTERNS.AUTH_VALIDATE_TOKEN)
+  @MessagePattern(AUTH_MESSAGE_PATTERNS.VALIDATE_TOKEN)
   async validateToken(@Payload() token: IJwtToken): Promise<IServiceResponse<boolean>> {
     return await this.authTokenService.validate(token);
   }

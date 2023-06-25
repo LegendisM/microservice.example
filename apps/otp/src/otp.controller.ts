@@ -11,7 +11,7 @@ export class OtpController {
     private otpService: OtpService
   ) { }
 
-  @MessagePattern(OTP_MESSAGE_PATTERNS.OTP_SEND)
+  @MessagePattern(OTP_MESSAGE_PATTERNS.SEND)
   async sendOtp(@Payload() request: IOtpRequest): Promise<IServiceResponse<boolean>> {
     return this.otpService.send(request);
   }

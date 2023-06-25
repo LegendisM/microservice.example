@@ -36,7 +36,7 @@ export class AuthGatewayController {
         @I18n() i18n: I18nContext
     ): Promise<IGatewayResponse> {
         const { state, message } = await firstValueFrom(
-            this.authClient.send<IServiceResponse<AuthRequestEntity>>(AUTH_MESSAGE_PATTERNS.AUTH_START, startDto)
+            this.authClient.send<IServiceResponse<AuthRequestEntity>>(AUTH_MESSAGE_PATTERNS.START, startDto)
         );
         if (state) {
             return {
@@ -55,22 +55,22 @@ export class AuthGatewayController {
         @I18n() i18n: I18nContext
     ): Promise<IGatewayResponse<IJwtToken>> {
         const { state, data: { phone }, message } = await firstValueFrom(
-            this.authClient.send<IServiceResponse<AuthRequestEntity>>(AUTH_MESSAGE_PATTERNS.AUTH_VALIDATE, validateDto)
+            this.authClient.send<IServiceResponse<AuthRequestEntity>>(AUTH_MESSAGE_PATTERNS.VALIDATE, validateDto)
         );
         if (state) {
             let user = await firstValueFrom(
-                this.userClient.send<IServiceResponse<UserEntity>, string>(USER_MESSAGE_PATTERNS.USER_FIND_BY_PHONE, phone)
+                this.userClient.send<IServiceResponse<UserEntity>, string>(USER_MESSAGE_PATTERNS.FIND_BY_PHONE, phone)
             );
 
             if (!user) {
                 user = await firstValueFrom(
-                    this.userClient.send<IServiceResponse<UserEntity>, CreateUserDto>(USER_MESSAGE_PATTERNS.USER_CREATE, { phone })
+                    this.userClient.send<IServiceResponse<UserEntity>, CreateUserDto>(USER_MESSAGE_PATTERNS.CREATE, { phone })
                 );
             }
 
             const { data: userData } = user;
             const { state, data: jwtToken, message } = await firstValueFrom(
-                this.authClient.send<IServiceResponse<IJwtToken>, IJwtPayload>(AUTH_MESSAGE_PATTERNS.AUTH_CREATE_TOKEN, { id: userData.id, phone: userData.phone })
+                this.authClient.send<IServiceResponse<IJwtToken>, IJwtPayload>(AUTH_MESSAGE_PATTERNS.CREATE_TOKEN, { id: userData.id, phone: userData.phone })
             );
 
             return {

@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Role } from "../interface/role.interface";
+import { VehicleEntity } from "apps/vehicle/src/entity/vehicle.entity";
 
 @Entity({
     name: 'user'
@@ -32,4 +33,7 @@ export class UserEntity {
 
     @Column()
     birthday: Date;
+
+    @OneToMany(() => VehicleEntity, (vehicle) => vehicle.user)
+    vehicles: VehicleEntity[];
 }

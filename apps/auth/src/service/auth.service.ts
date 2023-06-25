@@ -28,7 +28,7 @@ export class AuthService {
       const authRequest = await this.authRequestService.create(phone);
       const otpSended = await firstValueFrom(
         this.otpClient.send<boolean, IOtpRequest>(
-          OTP_MESSAGE_PATTERNS.OTP_SEND,
+          OTP_MESSAGE_PATTERNS.SEND,
           {
             type: OtpDriverType.SMS,
             target: authRequest.phone,

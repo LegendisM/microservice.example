@@ -13,22 +13,22 @@ export class UserController {
     private userService: UserService
   ) { }
 
-  @MessagePattern(USER_MESSAGE_PATTERNS.USER_CREATE)
+  @MessagePattern(USER_MESSAGE_PATTERNS.CREATE)
   async createUser(@Payload() createDto: CreateUserDto): Promise<IServiceResponse<UserEntity>> {
     return await this.userService.create(createDto);
   }
 
-  @MessagePattern(USER_MESSAGE_PATTERNS.USER_FIND_BY_ID)
+  @MessagePattern(USER_MESSAGE_PATTERNS.FIND_BY_ID)
   async getUserById(@Payload() id: string): Promise<IServiceResponse<UserEntity>> {
     return await this.userService.findById(id);
   }
 
-  @MessagePattern(USER_MESSAGE_PATTERNS.USER_FIND_BY_PHONE)
+  @MessagePattern(USER_MESSAGE_PATTERNS.FIND_BY_PHONE)
   async getUserByPhone(@Payload() phone: string): Promise<IServiceResponse<UserEntity>> {
     return await this.userService.findByPhone(phone);
   }
 
-  @MessagePattern(USER_MESSAGE_PATTERNS.USER_UPDATE)
+  @MessagePattern(USER_MESSAGE_PATTERNS.UPDATE)
   async updateUser(@Payload() updateDto: UpdateUserDto): Promise<IServiceResponse<UserEntity>> {
     return await this.userService.update(updateDto.id, updateDto);
   }
