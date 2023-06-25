@@ -1,4 +1,60 @@
+import { ApiProperty } from "@nestjs/swagger";
+import { IsBoolean, IsDate, IsNumber, IsString, IsUUID, Length, MaxLength, Min } from "class-validator";
 
-export class BaseVehicleDto { 
-    
+export class BaseVehicleDto {
+    @ApiProperty()
+    @IsUUID()
+    id: string;
+
+    @ApiProperty({
+        maxLength: 40
+    })
+    @IsString()
+    @MaxLength(40)
+    model: string;
+
+    @ApiProperty()
+    @IsBoolean()
+    isHeavy: boolean;
+
+    @ApiProperty({
+        minLength: 4,
+        maxLength: 10
+    })
+    @IsString()
+    @Length(4, 10)
+    plate: string;
+
+    @ApiProperty({
+        minLength: 2,
+        maxLength: 10
+    })
+    @IsString()
+    @Length(2, 10)
+    color: string;
+
+    @ApiProperty({
+        minLength: 1,
+        maxLength: 17
+    })
+    @IsString()
+    @Length(1, 17)
+    vin: string;
+
+    @ApiProperty({
+        minimum: 0
+    })
+    @IsNumber()
+    @Min(0)
+    distance: number;
+
+    @ApiProperty()
+    @IsDate()
+    year: Date;
+
+    @ApiProperty({
+        description: 'UUID Of The Vehicle Owner'
+    })
+    @IsUUID()
+    user: string;
 }

@@ -1,12 +1,40 @@
 import { Controller, Get } from '@nestjs/common';
 import { VehicleService } from './vehicle.service';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { VEHICLE_MESSAGE_PATTERNS } from './constant/vehicle-patterns.dto';
+import { CreateVehicleDto } from './dto/create-vehicle.dto';
+import { IServiceResponse } from '@app/rabbit';
+import { VehicleEntity } from './entity/vehicle.entity';
+import { IPagination, PaginationDto } from '@app/common';
 
 @Controller()
 export class VehicleController {
-  constructor(private readonly vehicleService: VehicleService) {}
+  constructor(
+    private vehicleService: VehicleService
+  ) { }
 
-  @Get()
-  getHello(): string {
-    return this.vehicleService.getHello();
+  @MessagePattern(VEHICLE_MESSAGE_PATTERNS.CREATE)
+  async createVehicle(@Payload() createDto: CreateVehicleDto): Promise<IServiceResponse<VehicleEntity>> {
+    return await this.vehicleService.create(createDto);
+  }
+
+  @MessagePattern(VEHICLE_MESSAGE_PATTERNS.FIND_ALL)
+  async getVehicles(@Payload() paginationDto: PaginationDto): Promise<IServiceResponse<IPagination<VehicleEntity>>> {
+    return await this.vehicleService.findAll(paginationDto);
+  }
+
+  @MessagePattern(VEHICLE_MESSAGE_PATTERNS.FIND_ALL_BY_USER)
+  async getUserVehicles(@Payload() userId: string): Promise<IServiceResponse<VehicleEntity[]>> {
+    return await this.vehicleService.findAllByUser(userId);
+  }
+
+  @MessagePattern(VEHICLE_MESSAGE_PATTERNS.FIND_BY_ID)
+  async getVehicleById(@Payload() id: string): Promise<IServiceResponse<VehicleEntity>> {
+    return await this.vehicleService.findById(id);
+  }
+
+  @MessagePattern(VEHICLE_MESSAGE_PATTERNS.FIND_BY_PLATE)
+  async getVehicleByPlate(@Payload() plate: string): Promise<IServiceResponse<VehicleEntity>> {
+    return await this.vehicleService.findByPlate(plate);
   }
 }

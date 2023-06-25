@@ -26,6 +26,9 @@ export class VehicleEntity {
     @Column()
     distance: number;
 
+    @Column()
+    year: Date;
+
     @ManyToOne(() => UserEntity, (user) => user.vehicles)
     user: UserEntity;
 }

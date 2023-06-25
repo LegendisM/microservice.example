@@ -6,6 +6,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import _ from 'lodash';
 import { IServiceResponse } from '@app/rabbit';
+import { IPagination, PaginationDto } from '@app/common';
 
 @Injectable()
 export class UserService {
@@ -21,6 +22,23 @@ export class UserService {
       data: result,
       message: 'user.created'
     };
+  }
+
+  async findAll({ limit, page }: PaginationDto): Promise<IServiceResponse<IPagination<UserEntity>>> {
+    const users = await this.userRepository.find({
+      skip: (page - 1) * limit,
+      take: limit - 1
+    });
+    const usersCount = await this.userRepository.count();
+    return {
+      state: true,
+      data: {
+        items: users,
+        limit: limit,
+        page: page,
+        total: usersCount
+      }
+    }
   }
 
   async findById(id: string): Promise<IServiceResponse<UserEntity>> {

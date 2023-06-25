@@ -6,6 +6,7 @@ import { UserEntity } from './entity/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { IServiceResponse } from '@app/rabbit';
+import { IPagination, PaginationDto } from '@app/common';
 
 @Controller()
 export class UserController {
@@ -16,6 +17,11 @@ export class UserController {
   @MessagePattern(USER_MESSAGE_PATTERNS.CREATE)
   async createUser(@Payload() createDto: CreateUserDto): Promise<IServiceResponse<UserEntity>> {
     return await this.userService.create(createDto);
+  }
+
+  @MessagePattern(USER_MESSAGE_PATTERNS.FINDALL)
+  async getUsers(@Payload() paginationDto: PaginationDto): Promise<IServiceResponse<IPagination<UserEntity>>> {
+    return await this.userService.findAll(paginationDto);
   }
 
   @MessagePattern(USER_MESSAGE_PATTERNS.FIND_BY_ID)
