@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsBoolean, IsDate, IsNumber, IsString, IsUUID, Length, MaxLength, Min } from "class-validator";
+import { UserEntity } from "apps/user/src/entity/user.entity";
+import { IsBoolean, IsDate, IsNumber, IsObject, IsOptional, IsString, IsUUID, Length, MaxLength, Min } from "class-validator";
 
 export class BaseVehicleDto {
     @ApiProperty()
@@ -52,9 +53,7 @@ export class BaseVehicleDto {
     @IsDate()
     year: Date;
 
-    @ApiProperty({
-        description: 'UUID Of The Vehicle Owner'
-    })
     @IsUUID()
-    user: string;
+    @IsOptional()
+    userId: string;
 }

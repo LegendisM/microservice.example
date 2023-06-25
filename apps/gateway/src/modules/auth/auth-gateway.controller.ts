@@ -11,12 +11,13 @@ import { ValidateAuthDto } from "apps/auth/src/dto/validate-auth.dto";
 import { USER_MESSAGE_PATTERNS } from "apps/user/src/constant/user-patterns.constant";
 import { CreateUserDto } from "apps/user/src/dto/create-user.dto";
 import { UserEntity } from "apps/user/src/entity/user.entity";
-import { IJwtPayload, IJwtToken } from "apps/auth/src/interface/token.interface";
+import { IJwtPayload, IJwtToken } from "@app/token/interface/token.interface";
 import { IGatewayResponse } from "../../common/interface/gateway.interface";
 
 @ApiTags('Auth Gateway')
 @Controller({
-    path: '/auth'
+    path: '/auth',
+    version: '1'
 })
 export class AuthGatewayController {
     constructor(

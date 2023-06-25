@@ -6,8 +6,8 @@ import { StartAuthDto } from './dto/start-auth.dto';
 import { ValidateAuthDto } from './dto/validate-auth.dto';
 import { IServiceResponse } from '@app/rabbit';
 import { AuthRequestEntity } from './entity/auth-request.entity';
-import { IJwtPayload, IJwtToken } from './interface/token.interface';
 import { AuthTokenService } from './service/auth-token.service';
+import { IJwtPayload, IJwtToken } from '@app/token';
 
 @Controller()
 export class AuthController {

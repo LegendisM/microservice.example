@@ -97,7 +97,8 @@
       "^@app/rabbit(|/.*)$": "<rootDir>/libs/rabbit/src/$1",
       "^@app/database(|/.*)$": "<rootDir>/libs/database/src/$1",
       "^@app/language(|/.*)$": "<rootDir>/libs/language/src/$1",
-      "^@app/token(|/.*)$": "<rootDir>/libs/token/src/$1"
+      "^@app/token(|/.*)$": "<rootDir>/libs/token/src/$1",
+      "^@app/authentication(|/.*)$": "<rootDir>/libs/authentication/src/$1"
     }
   }
 }

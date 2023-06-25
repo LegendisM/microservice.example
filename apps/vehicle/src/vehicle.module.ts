@@ -4,13 +4,14 @@ import { VehicleService } from './vehicle.service';
 import { RabbitModule, RabbitServiceName } from '@app/rabbit';
 import { Database, DatabaseModule } from '@app/database';
 import { VehicleEntity } from './entity/vehicle.entity';
+import { AuthenticationModule } from '@app/authentication';
 
 @Module({
   imports: [
     DatabaseModule.register(Database.PRIMARY),
     DatabaseModule.forEntity(Database.PRIMARY, [VehicleEntity]),
     RabbitModule.forServerProxy(RabbitServiceName.VEHICLE),
-    RabbitModule.forClientProxy(RabbitServiceName.USER),
+    RabbitModule.forClientProxy(RabbitServiceName.USER)
   ],
   controllers: [VehicleController],
   providers: [VehicleService],

@@ -19,9 +19,9 @@ export class VehicleService {
   ) { }
 
   async create(createDto: CreateVehicleDto): Promise<IServiceResponse<VehicleEntity>> {
-    const schema = await this.vehicleRepository.create(_.omit(createDto, ['user']));
+    const schema = await this.vehicleRepository.create(_.omit(createDto, ['userId']));
     schema.user = await firstValueFrom(
-      this.userClient.send<UserEntity>(USER_MESSAGE_PATTERNS.FIND_BY_ID, createDto.user)
+      this.userClient.send<UserEntity>(USER_MESSAGE_PATTERNS.FIND_BY_ID, createDto.userId)
     );
     const vehicle = await this.vehicleRepository.save(schema);
     return {
