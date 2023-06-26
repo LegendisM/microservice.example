@@ -1,6 +1,6 @@
+import _ from "lodash";
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from "@nestjs/common";
 import { Response } from "express";
-import _ from "lodash";
 import { I18nContext } from "nestjs-i18n";
 
 @Catch(HttpException)

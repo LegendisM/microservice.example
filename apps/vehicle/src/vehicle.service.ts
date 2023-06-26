@@ -16,7 +16,7 @@ import { Database } from '@app/database';
 export class VehicleService {
   constructor(
     @InjectRepository(VehicleEntity, Database.PRIMARY) private vehicleRepository: Repository<VehicleEntity>,
-    @Inject(RabbitServiceName.VEHICLE) private userClient: ClientProxy
+    @Inject(RabbitServiceName.USER) private userClient: ClientProxy
   ) { }
 
   async create(createDto: CreateVehicleDto): Promise<IServiceResponse<VehicleEntity>> {

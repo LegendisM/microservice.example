@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
+import request from 'supertest';
 import { VehicleModule } from './../src/vehicle.module';
 
 describe('VehicleController (e2e)', () => {

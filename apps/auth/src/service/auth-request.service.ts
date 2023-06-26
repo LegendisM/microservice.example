@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository, LessThanOrEqual } from "typeorm";
+import { Repository, MoreThanOrEqual } from "typeorm";
 import { AuthRequestEntity } from "../entity/auth-request.entity";
 import { Database } from "@app/database";
 
@@ -22,7 +22,7 @@ export class AuthRequestService {
     async findByPhone(phone: string): Promise<AuthRequestEntity> {
         return await this.authRequestRepository.findOneBy({
             phone,
-            expire: LessThanOrEqual(new Date())
+            expire: MoreThanOrEqual(new Date())
         });
     }
 

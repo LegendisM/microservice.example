@@ -4,7 +4,6 @@ import { VehicleService } from './vehicle.service';
 import { RabbitModule, RabbitServiceName } from '@app/rabbit';
 import { Database, DatabaseModule } from '@app/database';
 import { VehicleEntity } from './entity/vehicle.entity';
-import { AuthenticationModule } from '@app/authentication';
 
 @Module({
   imports: [

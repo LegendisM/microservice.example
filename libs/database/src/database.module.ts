@@ -1,4 +1,4 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule } from '@nestjs/common';
 import { Database } from './interface/database.interface';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -27,11 +27,12 @@ export class DatabaseModule {
               database: configService.get(`${config.env}_DB_NAME`),
               username: configService.get(`${config.env}_DB_USERNAME`),
               password: configService.get<string>(`${config.env}_DB_PASSWORD`),
+              entities: config.entities,
               synchronize: configService.get('NODE_ENV') != 'production'
             };
           },
           inject: [ConfigService]
-        })
+        }),
       ],
       exports: [TypeOrmModule]
     }
@@ -41,7 +42,6 @@ export class DatabaseModule {
     return {
       module: DatabaseModule,
       imports: [
-        this.register(database),
         TypeOrmModule.forFeature(entities, database)
       ],
       exports: [TypeOrmModule]

@@ -9,11 +9,8 @@ export class UserEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
+    @Column({ unique: true })
     phone: string;
-
-    @Column()
-    username: string;
 
     @Column({
         type: 'simple-array',
@@ -25,13 +22,16 @@ export class UserEntity {
     })
     role: Role[];
 
-    @Column()
+    @Column({ nullable: true })
+    username: string;
+
+    @Column({ nullable: true })
     email: string;
 
-    @Column()
+    @Column({ nullable: true })
     nationalcode: string;
 
-    @Column()
+    @Column({ nullable: true })
     birthday: Date;
 
     @OneToMany(() => VehicleEntity, (vehicle) => vehicle.user)

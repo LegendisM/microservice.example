@@ -14,10 +14,12 @@ services:
     depends_on:
       - user
       - auth
-      - profile
+      # - profile
       - vehicle
       - report
       - otp
+      - primary_db
+      - rabbit
   user:
     container_name: user_service
     build:
@@ -25,6 +27,7 @@ services:
       target: production
       dockerfile: ./apps/user/Dockerfile
     depends_on:
+      - primary_db
       - rabbit
   auth:
     container_name: auth_service
@@ -35,16 +38,17 @@ services:
     depends_on:
       - user
       - otp
+      - primary_db
       - rabbit
-  profile:
-    container_name: profile_service
-    build:
-      context: .
-      target: production
-      dockerfile: ./apps/profile/Dockerfile
-    depends_on:
-      - user
-      - rabbit
+    # profile:
+    # container_name: profile_service
+    # build:
+    #   context: .
+    #   target: production
+    #   dockerfile: ./apps/profile/Dockerfile
+    # depends_on:
+    #   - user
+    #   - rabbit
   vehicle:
     container_name: vehicle_service
     build:
@@ -53,6 +57,7 @@ services:
       dockerfile: ./apps/vehicle/Dockerfile
     depends_on:
       - user
+      - primary_db
       - rabbit
   report:
     container_name: report_service
@@ -62,6 +67,7 @@ services:
       dockerfile: ./apps/report/Dockerfile
     depends_on:
       - user
+      - primary_db
       - rabbit
   otp:
     container_name: otp_service
@@ -73,14 +79,30 @@ services:
       - rabbit
   rabbit:
     container_name: rabbit
-    image: bitnami/rabbitmq
+    image: rabbitmq:3.8
     environment:
-      - RABBITMQ_USERNAME=${RABBIT_MQ_USERNAME}
-      - RABBITMQ_PASSWORD=${RABBIT_MQ_PASSWORD}
-      - RABBITMQ_NODE_PORT_NUMBER=${RABBIT_MQ_PORT}
+      - RABBITMQ_DEFAULT_USER=${RABBIT_MQ_USERNAME}
+      - RABBITMQ_DEFAULT_PASS=${RABBIT_MQ_PASSWORD}
     ports:
-      - "${RABBIT_MQ_PORT}:${RABBIT_MQ_PORT}"
+      - "${RABBIT_MQ_PORT}:5672"
+  primary_db:
+    container_name: primary_db
+    image: postgres
+    environment:
+      - POSTGRES_USER=${PRIMARY_DB_USERNAME}
+      - POSTGRES_PASSWORD=${PRIMARY_DB_PASSWORD}
+      - POSTGRES_DB=${PRIMARY_DB_NAME}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - "${PRIMARY_DB_PORT}:5432"
+    volumes:
+      - primary_db_data:/var/lib/postgresql/data
+  db_manager:
+    container_name: db_manager
+    image: adminer
+    ports:
+      - '${DB_MANAGER_PORT}:8080'
 
 volumes:
-  data:
+  primary_db_data:
     driver: local

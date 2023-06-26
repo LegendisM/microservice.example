@@ -1,6 +1,6 @@
-import * as path from "path";
-import * as helmet from "helmet";
-import * as compression from "compression";
+import path from "path";
+import helmet from "helmet";
+import compression from "compression";
 import { NestFactory, Reflector } from '@nestjs/core';
 import { GatewayModule } from './gateway.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -25,7 +25,7 @@ async function bootstrap() {
 
   // * middlewares
   app.use(compression());
-  app.use(helmet.default());
+  app.use(helmet({ crossOriginResourcePolicy: false }));
 
   // * assets
   app.useStaticAssets(path.join(__dirname, '..', 'public'), { index: false, prefix: '/public' });
