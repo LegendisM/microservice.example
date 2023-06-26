@@ -6,9 +6,7 @@ import { Repository } from 'typeorm';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { IServiceResponse, RabbitServiceName } from '@app/rabbit';
 import { ClientProxy } from '@nestjs/microservices';
-import { USER_MESSAGE_PATTERNS } from 'apps/user/src/constant/user-patterns.constant';
 import { UserEntity } from 'apps/user/src/entity/user.entity';
-import { firstValueFrom } from 'rxjs';
 import { IPagination, PaginationDto } from '@app/common';
 import { Database } from '@app/database';
 
@@ -19,15 +17,13 @@ export class VehicleService {
     @Inject(RabbitServiceName.USER) private userClient: ClientProxy
   ) { }
 
-  async create(createDto: CreateVehicleDto): Promise<IServiceResponse<VehicleEntity>> {
-    const schema = await this.vehicleRepository.create(_.omit(createDto, ['userId']));
-    schema.user = await firstValueFrom(
-      this.userClient.send<UserEntity>(USER_MESSAGE_PATTERNS.FIND_BY_ID, createDto.userId)
-    );
-    const vehicle = await this.vehicleRepository.save(schema);
+  async create(createDto: CreateVehicleDto, user: UserEntity): Promise<IServiceResponse<VehicleEntity>> {
+    const vehicle = await this.vehicleRepository.create(createDto);
+    vehicle.user = user;
+    const result = await this.vehicleRepository.save(vehicle);
     return {
-      state: !!vehicle,
-      data: vehicle
+      state: !!result,
+      data: result
     };
   }
 

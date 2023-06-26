@@ -19,4 +19,4 @@ export class AuthenticationModule {
       exports: [JwtStrategy]
     }
   }
-}
+}``

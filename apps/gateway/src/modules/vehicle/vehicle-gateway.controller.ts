@@ -1,6 +1,6 @@
 import { Auth, CurrentUser } from "@app/authentication";
 import { IServiceResponse, RabbitServiceName } from "@app/rabbit";
-import { Body, Controller, Inject, Post } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Post } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { ApiTags } from "@nestjs/swagger";
 import { VEHICLE_MESSAGE_PATTERNS } from "apps/vehicle/src/constant/vehicle-patterns.dto";
@@ -12,7 +12,7 @@ import { UserEntity } from "apps/user/src/entity/user.entity";
 
 @ApiTags('Vehicle Gateway')
 @Controller({
-    path: '/vehicle',
+    path: '/vehicles',
     version: '1'
 })
 @Auth()
@@ -26,10 +26,15 @@ export class VehicleGatewayController {
         @Body() createDto: CreateVehicleDto,
         @CurrentUser() user: UserEntity
     ): Promise<IGatewayResponse> {
-        createDto.userId = user.id;
         const { state, data: vehicle } = await firstValueFrom(
-            this.vehicleClient.send<IServiceResponse<VehicleEntity>>(VEHICLE_MESSAGE_PATTERNS.CREATE, createDto)
-        )
+            this.vehicleClient.send<IServiceResponse<VehicleEntity>>(
+                VEHICLE_MESSAGE_PATTERNS.CREATE,
+                {
+                    createDto: createDto,
+                    user: user
+                }
+            )
+        );
         return {
             state: state,
             data: vehicle

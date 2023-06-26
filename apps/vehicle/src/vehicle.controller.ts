@@ -6,6 +6,7 @@ import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { IServiceResponse } from '@app/rabbit';
 import { VehicleEntity } from './entity/vehicle.entity';
 import { IPagination, PaginationDto } from '@app/common';
+import { UserEntity } from 'apps/user/src/entity/user.entity';
 
 @Controller()
 export class VehicleController {
@@ -14,8 +15,11 @@ export class VehicleController {
   ) { }
 
   @MessagePattern(VEHICLE_MESSAGE_PATTERNS.CREATE)
-  async createVehicle(@Payload() createDto: CreateVehicleDto): Promise<IServiceResponse<VehicleEntity>> {
-    return await this.vehicleService.create(createDto);
+  async createVehicle(
+    @Payload('createDto') createDto: CreateVehicleDto,
+    @Payload('user') user: UserEntity,
+  ): Promise<IServiceResponse<VehicleEntity>> {
+    return await this.vehicleService.create(createDto, user);
   }
 
   @MessagePattern(VEHICLE_MESSAGE_PATTERNS.FIND_ALL)
