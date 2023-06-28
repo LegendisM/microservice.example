@@ -7,6 +7,7 @@ import { IServiceResponse } from '@app/rabbit';
 import { VehicleEntity } from './entity/vehicle.entity';
 import { IPagination, PaginationDto } from '@app/common';
 import { UserEntity } from 'apps/user/src/entity/user.entity';
+import { FindVehiclesDto } from './dto/find-vehicle.dto';
 
 @Controller()
 export class VehicleController {
@@ -23,8 +24,8 @@ export class VehicleController {
   }
 
   @MessagePattern(VEHICLE_MESSAGE_PATTERNS.FIND_ALL)
-  async getVehicles(@Payload() paginationDto: PaginationDto): Promise<IServiceResponse<IPagination<VehicleEntity>>> {
-    return await this.vehicleService.findAll(paginationDto);
+  async getVehicles(@Payload() findDto: FindVehiclesDto): Promise<IServiceResponse<IPagination<VehicleEntity>>> {
+    return await this.vehicleService.findAll(findDto);
   }
 
   @MessagePattern(VEHICLE_MESSAGE_PATTERNS.FIND_ALL_BY_USER)

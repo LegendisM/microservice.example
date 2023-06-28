@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthenticationModule } from '@app/authentication';
 import { AuthGatewayController } from './modules/auth/auth-gateway.controller';
 import { VehicleGatewayController } from './modules/vehicle/vehicle-gateway.controller';
+import { PolicyModule } from '@app/policy';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { VehicleGatewayController } from './modules/vehicle/vehicle-gateway.cont
     RabbitModule.forClientProxy(RabbitServiceName.VEHICLE),
     RabbitModule.forClientProxy(RabbitServiceName.REPORT),
     AuthenticationModule.register(),
+    PolicyModule
   ],
   controllers: [
     AuthGatewayController,

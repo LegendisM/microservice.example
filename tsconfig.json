@@ -54,6 +54,12 @@
       ],
       "@app/authentication/*": [
         "libs/authentication/src/*"
+      ],
+      "@app/policy": [
+        "libs/policy/src"
+      ],
+      "@app/policy/*": [
+        "libs/policy/src/*"
       ]
     }
   }

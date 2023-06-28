@@ -20,7 +20,7 @@ export class UserEntity {
             to: (value) => JSON.stringify(value)
         }
     })
-    role: Role[];
+    roles: Role[];
 
     @Column({ nullable: true })
     username: string;

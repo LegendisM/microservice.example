@@ -1,14 +1,15 @@
-import _ from 'lodash';
+import _, { find } from 'lodash';
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VehicleEntity } from './entity/vehicle.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { CreateVehicleDto } from './dto/create-vehicle.dto';
 import { IServiceResponse, RabbitServiceName } from '@app/rabbit';
 import { ClientProxy } from '@nestjs/microservices';
 import { UserEntity } from 'apps/user/src/entity/user.entity';
 import { IPagination, PaginationDto } from '@app/common';
 import { Database } from '@app/database';
+import { FindVehiclesDto } from './dto/find-vehicle.dto';
 
 @Injectable()
 export class VehicleService {
@@ -27,8 +28,18 @@ export class VehicleService {
     };
   }
 
-  async findAll({ limit, page }: PaginationDto): Promise<IServiceResponse<IPagination<VehicleEntity>>> {
+  async findAll(findDto: FindVehiclesDto): Promise<IServiceResponse<IPagination<VehicleEntity>>> {
+    const { model, isHeavy, plate, color, vin, distance, year, limit, page } = findDto;
     const vehicles = await this.vehicleRepository.find({
+      where: [
+        (model) ? { model: Like(model) } : null,
+        (isHeavy) ? { isHeavy } : null,
+        (plate) ? { plate: Like(plate) } : null,
+        (color) ? { color } : null,
+        (vin) ? { vin: Like(vin) } : null,
+        (distance) ? { distance } : null,
+        (year) ? { year } : null,
+      ],
       skip: (page - 1) * limit,
       take: limit - 1
     });

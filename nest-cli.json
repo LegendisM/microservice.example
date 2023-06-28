@@ -124,6 +124,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/authentication/tsconfig.lib.json"
       }
+    },
+    "policy": {
+      "type": "library",
+      "root": "libs/policy",
+      "entryFile": "index",
+      "sourceRoot": "libs/policy/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/policy/tsconfig.lib.json"
+      }
     }
   },
   "monorepo": true,

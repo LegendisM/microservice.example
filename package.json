@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./apps/gateway/test/jest-e2e.json"
   },
   "dependencies": {
+    "@casl/ability": "^6.5.0",
     "@nestjs/axios": "^3.0.0",
     "@nestjs/common": "^10.0.3",
     "@nestjs/config": "^3.0.0",
@@ -98,7 +99,8 @@
       "^@app/database(|/.*)$": "<rootDir>/libs/database/src/$1",
       "^@app/language(|/.*)$": "<rootDir>/libs/language/src/$1",
       "^@app/token(|/.*)$": "<rootDir>/libs/token/src/$1",
-      "^@app/authentication(|/.*)$": "<rootDir>/libs/authentication/src/$1"
+      "^@app/authentication(|/.*)$": "<rootDir>/libs/authentication/src/$1",
+      "^@app/policy(|/.*)$": "<rootDir>/libs/policy/src/$1"
     }
   }
 }
