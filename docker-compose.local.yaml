@@ -14,9 +14,7 @@ services:
     depends_on:
       - user
       - auth
-      # - profile
       - vehicle
-      - report
       - otp
       - rabbit
   user:
@@ -39,31 +37,12 @@ services:
       - otp
       - primary_db
       - rabbit
-    # profile:
-    # container_name: profile_service
-    # build:
-    #   context: .
-    #   target: development
-    #   dockerfile: ./apps/profile/Dockerfile
-    # depends_on:
-    #   - user
-    #   - rabbit
   vehicle:
     container_name: vehicle_service
     build:
       context: .
       target: development
       dockerfile: ./apps/vehicle/Dockerfile
-    depends_on:
-      - user
-      - primary_db
-      - rabbit
-  report:
-    container_name: report_service
-    build:
-      context: .
-      target: development
-      dockerfile: ./apps/report/Dockerfile
     depends_on:
       - user
       - primary_db

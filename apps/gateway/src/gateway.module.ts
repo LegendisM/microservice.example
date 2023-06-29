@@ -19,9 +19,7 @@ import { PolicyModule } from '@app/policy';
     ),
     RabbitModule.forClientProxy(RabbitServiceName.USER),
     RabbitModule.forClientProxy(RabbitServiceName.AUTH),
-    // RabbitModule.forClientProxy(RabbitServiceName.PROFILE),
     RabbitModule.forClientProxy(RabbitServiceName.VEHICLE),
-    RabbitModule.forClientProxy(RabbitServiceName.REPORT),
     AuthenticationModule.register(),
     PolicyModule
   ],

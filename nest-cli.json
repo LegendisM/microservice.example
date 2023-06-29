@@ -53,15 +53,6 @@
         "tsConfigPath": "apps/auth/tsconfig.app.json"
       }
     },
-    "profile": {
-      "type": "application",
-      "root": "apps/profile",
-      "entryFile": "main",
-      "sourceRoot": "apps/profile/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/profile/tsconfig.app.json"
-      }
-    },
     "vehicle": {
       "type": "application",
       "root": "apps/vehicle",
@@ -69,15 +60,6 @@
       "sourceRoot": "apps/vehicle/src",
       "compilerOptions": {
         "tsConfigPath": "apps/vehicle/tsconfig.app.json"
-      }
-    },
-    "report": {
-      "type": "application",
-      "root": "apps/report",
-      "entryFile": "main",
-      "sourceRoot": "apps/report/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/report/tsconfig.app.json"
       }
     },
     "database": {
