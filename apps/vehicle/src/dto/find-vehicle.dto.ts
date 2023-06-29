@@ -4,39 +4,39 @@ import { Transform } from "class-transformer";
 import { IsBoolean, IsDateString, IsNumber, IsOptional, IsString } from "class-validator";
 
 export class FindVehiclesDto extends IntersectionType(PaginationDto) {
-    @ApiProperty()
+    @ApiProperty({ required: false })
     @IsString()
     @IsOptional()
     model?: string;
 
-    @ApiProperty()
+    @ApiProperty({ required: false })
     @Transform(({ value }) => Boolean(value))
     @IsBoolean()
     @IsOptional()
     isHeavy?: boolean;
 
-    @ApiProperty()
+    @ApiProperty({ required: false })
     @IsString()
     @IsOptional()
     plate?: string;
 
-    @ApiProperty()
+    @ApiProperty({ required: false })
     @IsString()
     @IsOptional()
     color?: string;
 
-    @ApiProperty()
+    @ApiProperty({ required: false })
     @IsString()
     @IsOptional()
     vin?: string;
 
-    @ApiProperty()
+    @ApiProperty({ required: false })
     @Transform(({ value }) => parseInt(value))
     @IsNumber()
     @IsOptional()
     distance?: number;
 
-    @ApiProperty()
+    @ApiProperty({ required: false })
     @IsDateString()
     @Transform(({ value }) => Date.parse(value))
     @IsOptional()

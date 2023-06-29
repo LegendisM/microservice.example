@@ -1,6 +1,6 @@
 import { Auth, CurrentUser } from "@app/authentication";
 import { IServiceResponse, RabbitServiceName } from "@app/rabbit";
-import { Body, Controller, Get, Inject, Param, Post, Query } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Param, Post, Query, SerializeOptions } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { ApiTags } from "@nestjs/swagger";
 import { VEHICLE_MESSAGE_PATTERNS } from "apps/vehicle/src/constant/vehicle-patterns.dto";
@@ -93,6 +93,7 @@ export class VehicleGatewayController {
     }
 
     @Post('/')
+    @SerializeOptions({ excludePrefixes: ['user'] })
     async createVehicle(
         @Body() createDto: CreateVehicleDto,
         @CurrentUser() user: UserEntity

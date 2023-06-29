@@ -1,5 +1,5 @@
 import { UserEntity } from "apps/user/src/entity/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, RelationId } from "typeorm";
 
 @Entity({
     name: 'vehicle'
@@ -31,4 +31,7 @@ export class VehicleEntity {
 
     @ManyToOne(() => UserEntity, (user) => user.vehicles)
     user: UserEntity;
+
+    @RelationId((vehicleEntity: VehicleEntity) => vehicleEntity.user)
+    userId: string;
 }

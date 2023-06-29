@@ -1,8 +1,6 @@
-import { InferSubjects } from "@casl/ability";
-import { UserEntity } from "apps/user/src/entity/user.entity";
-import { VehicleEntity } from "apps/vehicle/src/entity/vehicle.entity";
+import { ForcedSubject, InferSubjects } from "@casl/ability";
 
-export type PolicySubjects = InferSubjects<typeof UserEntity | typeof VehicleEntity> | 'UserEntity' | 'VehicleEntity' | 'all';
+export type PolicySubjects = InferSubjects<ForcedSubject<'UserEntity' | 'VehicleEntity'>> | 'all';
 
 export enum PolicyAction {
     Manage = 'manage',
