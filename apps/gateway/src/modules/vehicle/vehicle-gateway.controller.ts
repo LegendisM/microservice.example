@@ -74,24 +74,6 @@ export class VehicleGatewayController {
         }
     }
 
-    @Get('/:plate')
-    async getVehicleByPlate(
-        @Param('plate') plate: string,
-        @CurrentUser() user: UserEntity
-    ): Promise<IGatewayResponse<VehicleEntity>> {
-        const { state, data: vehicle } = await firstValueFrom(
-            this.vehicleClient.send<IServiceResponse<VehicleEntity>, string>(
-                VEHICLE_MESSAGE_PATTERNS.FIND_BY_PLATE,
-                plate
-            )
-        );
-        this.policyService.forVehicle(PolicyAction.Read, user, vehicle, true);
-        return {
-            state,
-            data: vehicle
-        };
-    }
-
     @Post('/')
     @SerializeOptions({ excludePrefixes: ['user'] })
     async createVehicle(

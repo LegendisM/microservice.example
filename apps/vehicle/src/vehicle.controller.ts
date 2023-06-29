@@ -37,9 +37,4 @@ export class VehicleController {
   async getVehicleById(@Payload() id: string): Promise<IServiceResponse<VehicleEntity>> {
     return await this.vehicleService.findById(id);
   }
-
-  @MessagePattern(VEHICLE_MESSAGE_PATTERNS.FIND_BY_PLATE)
-  async getVehicleByPlate(@Payload() plate: string): Promise<IServiceResponse<VehicleEntity>> {
-    return await this.vehicleService.findByPlate(plate);
-  }
 }
