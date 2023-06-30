@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsBoolean, IsDateString, IsNumber, IsString, IsUUID, Length, MaxLength, Min } from "class-validator";
+import { Transform } from "class-transformer";
+import { IsBoolean, IsDate, IsNumber, IsString, IsUUID, Length, MaxLength, Min } from "class-validator";
 
 export class BaseVehicleDto {
     @ApiProperty()
@@ -14,6 +15,7 @@ export class BaseVehicleDto {
     model: string;
 
     @ApiProperty()
+    @Transform(({ value }) => Boolean(value))
     @IsBoolean()
     isHeavy: boolean;
 
@@ -44,11 +46,13 @@ export class BaseVehicleDto {
     @ApiProperty({
         minimum: 0
     })
+    @Transform(({ value }) => parseInt(value))
     @IsNumber()
     @Min(0)
     distance: number;
 
     @ApiProperty()
-    @IsDateString()
+    @Transform(({ value }) => new Date(Date.parse(value)))
+    @IsDate()
     year: Date;
 }
