@@ -115,6 +115,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/policy/tsconfig.lib.json"
       }
+    },
+    "storage": {
+      "type": "application",
+      "root": "apps/storage",
+      "entryFile": "main",
+      "sourceRoot": "apps/storage/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/storage/tsconfig.app.json"
+      }
     }
   },
   "monorepo": true,

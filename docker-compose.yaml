@@ -16,6 +16,7 @@ services:
       - auth
       - vehicle
       - otp
+      - storage
       - primary_db
       - rabbit
   user:
@@ -56,6 +57,11 @@ services:
       dockerfile: ./apps/otp/Dockerfile
     depends_on:
       - rabbit
+  storage:
+    container_name: storage_service
+    build:
+      context: .
+      dockerfile: ./apps/storage/Dockerfile
   rabbit:
     container_name: rabbit
     image: rabbitmq:3.8

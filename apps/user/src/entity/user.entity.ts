@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Role } from "../interface/role.interface";
 import { VehicleEntity } from "apps/vehicle/src/entity/vehicle.entity";
+import { StorageFileEntity } from "apps/storage/src/entity/storage-file.entity";
 
 @Entity({
     name: 'user'
@@ -36,4 +37,7 @@ export class UserEntity {
 
     @OneToMany(() => VehicleEntity, (vehicle) => vehicle.user)
     vehicles: VehicleEntity[];
+
+    @OneToMany(() => StorageFileEntity, (storageFile) => storageFile.user)
+    files: StorageFileEntity[];
 }

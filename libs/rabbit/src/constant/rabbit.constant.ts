@@ -14,5 +14,8 @@ export const RABBIT_SERVICES: Record<RabbitServiceName, { queue: string }> = {
     },
     OTP_SERVICE: {
         queue: 'otp_queue'
+    },
+    STORAGE_SERVICE: {
+        queue: 'storage_queue'
     }
 }
