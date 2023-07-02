@@ -12,6 +12,7 @@ import { STORAGE_MESSAGE_PATTERNS } from "apps/storage/src/constant/storage-patt
 import { StorageFileEntity } from "apps/storage/src/entity/storage-file.entity";
 import { CreateStorageFileDto } from "apps/storage/src/dto/create-storage-file.dto";
 import { StorageFileBucket, StorageFileDriverType, StorageFileType } from "apps/storage/src/interface/storage-file.interface";
+import { ParseUploadFilePipe } from "@app/common/pipe/parse-upload-file.pipe";
 
 @Controller({
     path: '/profiles',
@@ -45,7 +46,7 @@ export class UserProfileGatewayController {
     @UseInterceptors(FileInterceptor('avatar'))
     async uploadProfileAvatar(
         @CurrentUser() user: UserEntity,
-        @UploadedFile() avatar: Express.Multer.File
+        @UploadedFile(new ParseUploadFilePipe()) avatar: Express.Multer.File
     ): Promise<IGatewayResponse> {
         const { state: storageState, data: storageData } = await firstValueFrom(
             this.storageService.send<IServiceResponse<StorageFileEntity>, { createDto: CreateStorageFileDto, user: UserEntity }>(
