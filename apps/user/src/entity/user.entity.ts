@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Role } from "../interface/role.interface";
 import { VehicleEntity } from "apps/vehicle/src/entity/vehicle.entity";
 import { StorageFileEntity } from "apps/storage/src/entity/storage-file.entity";
@@ -34,6 +34,9 @@ export class UserEntity {
 
     @Column({ nullable: true })
     birthday: Date;
+
+    @OneToOne(() => StorageFileEntity, (storageFile) => storageFile.id, { eager: true, onDelete: 'SET NULL' })
+    avatar: StorageFileEntity;
 
     @OneToMany(() => VehicleEntity, (vehicle) => vehicle.user)
     vehicles: VehicleEntity[];

@@ -7,6 +7,10 @@ import { AuthenticationModule } from '@app/authentication';
 import { AuthGatewayController } from './modules/auth/auth-gateway.controller';
 import { VehicleGatewayController } from './modules/vehicle/vehicle-gateway.controller';
 import { PolicyModule } from '@app/policy';
+import { MulterModule } from '@nestjs/platform-express';
+import multer from 'multer';
+import { UserGatewayController } from './modules/user/user-gateway.controller';
+import { UserProfileGatewayController } from './modules/user/user-profile-gateway.controller';
 
 @Module({
   imports: [
@@ -17,14 +21,20 @@ import { PolicyModule } from '@app/policy';
     LanguageModule.register(
       path.join(__dirname, '../../../static/i18n')
     ),
+    MulterModule.register({
+      storage: multer.memoryStorage()
+    }),
     RabbitModule.forClientProxy(RabbitServiceName.USER),
     RabbitModule.forClientProxy(RabbitServiceName.AUTH),
     RabbitModule.forClientProxy(RabbitServiceName.VEHICLE),
+    RabbitModule.forClientProxy(RabbitServiceName.STORAGE),
     AuthenticationModule.register(),
     PolicyModule
   ],
   controllers: [
     AuthGatewayController,
+    UserGatewayController,
+    UserProfileGatewayController,
     VehicleGatewayController
   ]
 })
