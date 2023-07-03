@@ -63,7 +63,7 @@ export class UserService {
   async update(id: string, updateDto: UpdateUserDto): Promise<IServiceResponse<UserEntity>> {
     const { state, data: user } = await this.findById(id);
     if (state) {
-      Object.assign(user, _.omit(updateDto, 'id'));
+      Object.assign(user, updateDto);
       const updatedUser = await this.userRepository.save(user);
       return {
         state: !!updatedUser,
