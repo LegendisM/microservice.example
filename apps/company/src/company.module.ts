@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { CompanyController } from './company.controller';
-import { CompanyService } from './company.service';
+import { CompanyController } from './controller/company.controller';
+import { CompanyService } from './service/company.service';
 import { RabbitModule, RabbitServiceName } from '@app/rabbit';
 import { Database, DatabaseModule } from '@app/database';
 import { CompanyEntity } from './entity/company.entity';
