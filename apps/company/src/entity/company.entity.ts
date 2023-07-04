@@ -16,6 +16,9 @@ export class CompanyEntity {
     @Column()
     description: string;
 
+    @Column({ default: false })
+    enabled: boolean;
+
     @OneToOne(() => UserEntity, (user) => user.id, { onDelete: "SET NULL" })
     @JoinColumn()
     owner: UserEntity;
