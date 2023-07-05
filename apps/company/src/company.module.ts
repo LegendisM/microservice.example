@@ -5,7 +5,7 @@ import { RabbitModule, RabbitServiceName } from '@app/rabbit';
 import { Database, DatabaseModule } from '@app/database';
 import { CompanyEntity } from './entity/company.entity';
 import { CompanyCategoryEntity } from './entity/company-category.entity';
-import { CompanyInvitationEntity } from './entity/company-invite.entity';
+import { CompanyInvitationEntity } from './entity/company-invitation.entity';
 
 @Module({
   imports: [

@@ -4,10 +4,11 @@ import { CompanyEntity } from '../entity/company.entity';
 import { Database } from '@app/database';
 import { Like, Repository } from 'typeorm';
 import { IServiceResponse } from '@app/rabbit';
-import { CreateCompanyDto } from '../dto/create-company.dto';
+import { CreateCompanyDto } from '../dto/company/create-company.dto';
 import { UserEntity } from 'apps/user/src/entity/user.entity';
-import { FindCompaniesDto } from '../dto/find-company.dto';
+import { FindCompaniesDto } from '../dto/company/find-company.dto';
 import { IPagination } from '@app/common';
+import { COMPANY_MAX_COUNT_PER_USER } from '../constant/company.constant';
 
 @Injectable()
 export class CompanyService {
@@ -16,9 +17,13 @@ export class CompanyService {
   ) { }
 
   async create(createDto: CreateCompanyDto, user: UserEntity): Promise<IServiceResponse<CompanyEntity>> {
-    const company = await this.companyRepository.create(createDto);
-    company.owner = user;
-    const result = await this.companyRepository.save(company);
+    let result;
+    const { state: canCreate } = await this.validateCompanyCountLimitation(user.id);
+    if (canCreate) {
+      const company = await this.companyRepository.create(createDto);
+      company.owner = user;
+      result = await this.companyRepository.save(company);
+    }
     return {
       state: !!result,
       data: result
@@ -53,6 +58,15 @@ export class CompanyService {
     return {
       state: !!company,
       data: company
+    };
+  }
+
+  async validateCompanyCountLimitation(userId: string): Promise<IServiceResponse<boolean>> {
+    const ownedCompanies = await this.companyRepository.findBy({ ownerId: userId });
+    const valid = (ownedCompanies.length < COMPANY_MAX_COUNT_PER_USER);
+    return {
+      state: valid,
+      data: valid
     };
   }
 }
