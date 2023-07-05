@@ -1,6 +1,6 @@
 import { Auth, CurrentUser } from "@app/authentication";
 import { IServiceResponse, RabbitServiceName } from "@app/rabbit";
-import { Body, Controller, Delete, Inject, Put, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Inject, Patch, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { IGatewayResponse } from "../../common/interface/gateway.interface";
 import { FileInterceptor } from "@nestjs/platform-express";
@@ -25,7 +25,7 @@ export class UserProfileGatewayController {
         @Inject(RabbitServiceName.STORAGE) private storageService: ClientProxy
     ) { }
 
-    @Put('/')
+    @Patch('/')
     async updateProfile(
         @Body() updateDto: UpdateUserDto,
         @CurrentUser('id') userId: string,
@@ -42,7 +42,7 @@ export class UserProfileGatewayController {
         return { state, data };
     }
 
-    @Put('/avatar')
+    @Patch('/avatar')
     @UseInterceptors(FileInterceptor('avatar'))
     async uploadProfileAvatar(
         @CurrentUser() user: UserEntity,
