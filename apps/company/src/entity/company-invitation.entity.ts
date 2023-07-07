@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { UserEntity } from "apps/user/src/entity/user.entity";
-import { BeforeInsert, Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn, RelationId } from "typeorm";
 import { CompanyEntity } from "./company.entity";
 import { addHours } from "date-fns";
 import { COMPANY_INVITATION_EXPIRE_TIME } from "../constant/company.constant";
@@ -26,6 +26,9 @@ export class CompanyInvitationEntity {
 
     @ManyToOne(() => CompanyEntity, (company) => company.invitations)
     company: CompanyEntity;
+
+    @RelationId((companyInvitation: CompanyInvitationEntity) => companyInvitation.company)
+    companyId: string;
 
     @BeforeInsert()
     onBeforeInsert() {

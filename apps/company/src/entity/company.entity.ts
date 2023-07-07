@@ -27,7 +27,7 @@ export class CompanyEntity {
     ownerId: string;
 
     @OneToMany(() => UserEntity, (user) => user.company)
-    members: UserEntity[];
+    members: UserEntity[]; // TODO: create companyMember entity instead of using user directrly
 
     @OneToMany(() => CompanyInvitationEntity, (companyInviation) => companyInviation.company)
     invitations: CompanyInvitationEntity[];

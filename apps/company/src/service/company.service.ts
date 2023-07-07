@@ -20,7 +20,7 @@ export class CompanyService {
     let result;
     const { state: canCreate } = await this.validateCompanyCountLimitation(user.id);
     if (canCreate) {
-      const company = await this.companyRepository.create(createDto);
+      const company = this.companyRepository.create(createDto);
       company.owner = user;
       result = await this.companyRepository.save(company);
     }
@@ -58,6 +58,19 @@ export class CompanyService {
     return {
       state: !!company,
       data: company
+    };
+  }
+
+  async update(id: string, updateDto: Partial<CompanyEntity>): Promise<IServiceResponse<CompanyEntity>> {
+    let result;
+    const { state: finded, data: company } = await this.findById(id);
+    if (finded) {
+      Object.assign(company, updateDto);
+      result = await this.companyRepository.save(company);
+    }
+    return {
+      state: !!result,
+      data: result
     };
   }
 
