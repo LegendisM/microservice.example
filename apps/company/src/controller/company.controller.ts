@@ -2,11 +2,11 @@ import { Controller, Get } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { COMPANY_MESSAGE_PATTERNS } from '../constant/company-patterns.constant';
 import { IServiceResponse } from '@app/rabbit';
-import { CreateCompanyDto } from '../dto/create-company.dto';
+import { CreateCompanyDto } from '../dto/company/create-company.dto';
 import { UserEntity } from 'apps/user/src/entity/user.entity';
 import { CompanyEntity } from '../entity/company.entity';
 import { CompanyService } from '../service/company.service';
-import { FindCompaniesDto } from '../dto/find-company.dto';
+import { FindCompaniesDto } from '../dto/company/find-company.dto';
 import { IPagination } from '@app/common/interface/pagination.interface';
 
 @Controller()

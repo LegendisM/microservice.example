@@ -2,6 +2,7 @@ import { UserEntity } from "apps/user/src/entity/user.entity";
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn, RelationId } from "typeorm";
 import { CompanyCategoryEntity } from "./company-category.entity";
 import { CompanyInvitationEntity } from "./company-invitation.entity";
+import { CompanyMemberEntity } from "./company-member.entity";
 
 @Entity({
     name: 'company'
@@ -26,8 +27,8 @@ export class CompanyEntity {
     @RelationId((companyEntity: CompanyEntity) => companyEntity.owner)
     ownerId: string;
 
-    @OneToMany(() => UserEntity, (user) => user.company)
-    members: UserEntity[]; // TODO: create companyMember entity instead of using user directrly
+    @OneToMany(() => CompanyMemberEntity, (companyMember) => companyMember.company)
+    members: CompanyMemberEntity[];
 
     @OneToMany(() => CompanyInvitationEntity, (companyInviation) => companyInviation.company)
     invitations: CompanyInvitationEntity[];

@@ -9,11 +9,13 @@ import { CompanyEntity } from "../entity/company.entity";
 import { IServiceResponse } from "@app/rabbit";
 import { COMPANY_MAX_INVITATION_COUNT } from "../constant/company.constant";
 import { CompanyMemberService } from "./company-member.service";
+import { CompanyService } from "./company.service";
 
 @Injectable()
 export class CompanyInvitationService {
     constructor(
         @InjectRepository(CompanyInvitationEntity, Database.PRIMARY) private companyInvitationRepository: Repository<CompanyInvitationEntity>,
+        private companyService: CompanyService,
         private companyMemberService: CompanyMemberService
     ) { }
 
@@ -57,8 +59,11 @@ export class CompanyInvitationService {
         if (finded) {
             const { state: updated, data: invite } = await this.update(id, { use: true });
             if (updated) {
-                // await this.companyMemberService.create(company, user); // TODO: create company member for this user
-                result = invite;
+                const { data: company } = await this.companyService.findById(invite.companyId);
+                const { state: isJoined, data: companyMember } = await this.companyMemberService.create(company, user);
+                if (isJoined) {
+                    result = invite;
+                }
             }
         }
         return {
