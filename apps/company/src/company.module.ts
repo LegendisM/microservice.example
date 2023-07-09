@@ -9,6 +9,8 @@ import { CompanyInvitationEntity } from './entity/company-invitation.entity';
 import { CompanyInvitationService } from './service/company-invitation.service';
 import { CompanyMemberService } from './service/company-member.service';
 import { CompanyMemberEntity } from './entity/company-member.entity';
+import { CompanyInvitationController } from './controller/company-invitation.controller';
+import { CompanyMemberController } from './controller/company-member.controller';
 
 @Module({
   imports: [
@@ -16,7 +18,7 @@ import { CompanyMemberEntity } from './entity/company-member.entity';
     DatabaseModule.forEntity(Database.PRIMARY, [CompanyEntity, CompanyMemberEntity, CompanyCategoryEntity, CompanyInvitationEntity]),
     RabbitModule.forServerProxy(RabbitServiceName.COMPANY),
   ],
-  controllers: [CompanyController],
+  controllers: [CompanyController, CompanyInvitationController, CompanyMemberController],
   providers: [CompanyService, CompanyInvitationService, CompanyMemberService],
 })
 export class CompanyModule { }

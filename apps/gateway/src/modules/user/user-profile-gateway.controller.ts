@@ -31,11 +31,11 @@ export class UserProfileGatewayController {
         @CurrentUser('id') userId: string,
     ): Promise<IGatewayResponse> {
         const { state, data } = await firstValueFrom(
-            this.userService.send<IServiceResponse<UserEntity>, { updateDto: UpdateUserDto, userId: string }>(
+            this.userService.send<IServiceResponse<UserEntity>, { id: string, updateDto: UpdateUserDto }>(
                 USER_MESSAGE_PATTERNS.UPDATE,
                 {
-                    updateDto: updateDto,
-                    userId: userId
+                    id: userId,
+                    updateDto: updateDto
                 }
             )
         );
@@ -65,13 +65,13 @@ export class UserProfileGatewayController {
         );
         if (storageState) {
             const { state: updateState } = await firstValueFrom(
-                this.userService.send<IServiceResponse<UpdateUserDto>, { updateDto: UpdateUserDto, userId: string }>(
+                this.userService.send<IServiceResponse<UpdateUserDto>, { id: string, updateDto: UpdateUserDto }>(
                     USER_MESSAGE_PATTERNS.UPDATE,
                     {
+                        id: user.id,
                         updateDto: {
                             avatar: storageData
-                        },
-                        userId: user.id
+                        }
                     }
                 )
             );
@@ -86,13 +86,13 @@ export class UserProfileGatewayController {
         @CurrentUser('id') userId: string
     ): Promise<IGatewayResponse> {
         const { state } = await firstValueFrom(
-            this.userService.send<IServiceResponse<UserEntity>, { updateDto: UpdateUserDto, userId: string }>(
+            this.userService.send<IServiceResponse<UserEntity>, { id: string, updateDto: UpdateUserDto }>(
                 USER_MESSAGE_PATTERNS.UPDATE,
                 {
+                    id: userId,
                     updateDto: {
                         avatar: null
-                    },
-                    userId: userId
+                    }
                 }
             )
         );
