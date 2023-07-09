@@ -6,7 +6,6 @@ import { CompanyMemberEntity } from "../entity/company-member.entity";
 import { Database } from "@app/database";
 import { Repository } from "typeorm";
 import { IServiceResponse } from "@app/rabbit";
-import { IPagination } from "@app/common";
 
 @Injectable()
 export class CompanyMemberService {
@@ -14,11 +13,53 @@ export class CompanyMemberService {
         @InjectRepository(CompanyMemberEntity, Database.PRIMARY) private companyMemberRepository: Repository<CompanyMemberEntity>
     ) { }
 
-    async create(company: CompanyEntity, user: UserEntity): Promise<IServiceResponse<CompanyMemberEntity>> { }
+    async create(company: CompanyEntity, user: UserEntity): Promise<IServiceResponse<CompanyMemberEntity>> {
+        let result;
+        const { state: isUnemployed } = await this.isUnemployed(user);
+        if (isUnemployed) {
+            const member = await this.companyMemberRepository.create({ company, user });
+            result = await this.companyMemberRepository.save(member);
+        }
+        return {
+            state: !!result,
+            data: result
+        };
+    }
 
-    async findAll(company: CompanyEntity): Promise<IServiceResponse<IPagination<CompanyMemberEntity>>> { }
+    async findAll(company: CompanyEntity): Promise<IServiceResponse<CompanyMemberEntity[]>> {
+        const members = await this.companyMemberRepository.findBy({ company: { id: company.id } });
+        return {
+            state: true,
+            data: members
+        }
+    }
 
-    async remove(user: UserEntity): Promise<IServiceResponse<CompanyMemberEntity>> { }
+    async findByUser(user: UserEntity): Promise<IServiceResponse<CompanyMemberEntity>> {
+        const member = await this.companyMemberRepository.findOneBy({ user: { id: user.id } });
+        return {
+            state: !!member,
+            data: member
+        };
+    }
 
-    async isUnemployed(user: UserEntity): Promise<IServiceResponse<CompanyMemberEntity>> { }
+    async remove(user: UserEntity): Promise<IServiceResponse<CompanyMemberEntity>> {
+        let result;
+        const { data: member } = await this.findByUser(user);
+        if (member) {
+            result = await this.companyMemberRepository.remove(member);
+        }
+        return {
+            state: !!result,
+            data: result
+        };
+    }
+
+    async isUnemployed(user: UserEntity): Promise<IServiceResponse<boolean>> {
+        const member = await this.companyMemberRepository.findOneBy({ user: { id: user.id } });
+        const result = !!member == false;
+        return {
+            state: result,
+            data: result
+        };
+    }
 }
