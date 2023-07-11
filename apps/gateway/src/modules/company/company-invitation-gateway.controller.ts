@@ -12,12 +12,12 @@ export class CompanyInvitationGatewayController {
     constructor(
         @Inject(RabbitServiceName.COMPANY) private companyClient: ClientProxy
     ) { }
-    
+
     // TODO
-    // createInvitation
-    // getInvitationById
-    // getInvitationByCode
-    // updateInvitation
-    // removeInvitation
-    // useInvitation
+    async createInvitation() { }
+    async getInvitationById() { }
+    async getInvitationByCode() { }
+    async updateInvitation() { }
+    async removeInvitation() { }
+    async useInvitation() { }
 }

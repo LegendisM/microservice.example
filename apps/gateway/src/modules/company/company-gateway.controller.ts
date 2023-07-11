@@ -14,7 +14,7 @@ export class CompanyGatewayController {
     ) { }
 
     // TODO
-    // createCompany
-    // getCompanies
-    // getCompanyById
+    async createCompany() { }
+    async getCompanies() { }
+    async getCompanyById() { }
 }

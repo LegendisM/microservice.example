@@ -14,9 +14,9 @@ export class CompanyMemberGatewayController {
     ) { }
 
     // TODO
-    // create
-    // getMembers
-    // getMemberByUser
-    // removeMember
-    // getUserIsUnemployed
+    async createMember(){}
+    async getMembers(){}
+    async getMemberByUser(){}
+    async removeMember(){}
+    async getUserIsUnemployed(){}
 }
