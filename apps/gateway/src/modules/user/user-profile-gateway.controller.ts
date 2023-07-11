@@ -13,7 +13,9 @@ import { StorageFileEntity } from "apps/storage/src/entity/storage-file.entity";
 import { CreateStorageFileDto } from "apps/storage/src/dto/create-storage-file.dto";
 import { StorageFileBucket, StorageFileDriverType, StorageFileType } from "apps/storage/src/interface/storage-file.interface";
 import { ParseUploadFilePipe } from "@app/common/pipe/parse-upload-file.pipe";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Profile Gateway')
 @Controller({
     path: '/profiles',
     version: '1'
