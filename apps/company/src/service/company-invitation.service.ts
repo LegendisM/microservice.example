@@ -10,6 +10,8 @@ import { IServiceResponse } from "@app/rabbit";
 import { COMPANY_MAX_INVITATION_COUNT } from "../constant/company.constant";
 import { CompanyMemberService } from "./company-member.service";
 import { CompanyService } from "./company.service";
+import { IPagination } from "@app/common";
+import { FindCompaniesInvitationsDto } from "../dto/invitation/find-company-invitation";
 
 @Injectable()
 export class CompanyInvitationService {
@@ -30,6 +32,27 @@ export class CompanyInvitationService {
         return {
             state: !!result,
             data: result
+        };
+    }
+
+    async findAll({ companyId, limit, page }: FindCompaniesInvitationsDto): Promise<IServiceResponse<IPagination<CompanyInvitationEntity>>> {
+        const where = [
+            (companyId) ? { companyId } : null
+        ];
+        const invites = await this.companyInvitationRepository.find({
+            where: where,
+            skip: (page - 1) * limit,
+            take: limit
+        });
+        const invitesCount = await this.companyInvitationRepository.count({ where });
+        return {
+            state: true,
+            data: {
+                limit: limit,
+                page: page,
+                items: invites,
+                total: Math.ceil(invitesCount / limit)
+            }
         };
     }
 
