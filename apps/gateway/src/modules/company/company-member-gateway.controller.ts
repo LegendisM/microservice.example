@@ -1,5 +1,5 @@
 import { RabbitServiceName } from "@app/rabbit";
-import { Controller, Inject } from "@nestjs/common";
+import { Controller, Get, Inject } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { ApiTags } from "@nestjs/swagger";
 
@@ -13,10 +13,6 @@ export class CompanyMemberGatewayController {
         @Inject(RabbitServiceName.COMPANY) private companyClient: ClientProxy
     ) { }
 
-    // TODO
-    async createMember(){}
-    async getMembers(){}
-    async getMemberByUser(){}
-    async removeMember(){}
-    async getUserIsUnemployed(){}
+    @Get('/')
+    async getMembers() { }
 }
