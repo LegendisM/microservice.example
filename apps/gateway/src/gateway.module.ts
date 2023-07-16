@@ -11,6 +11,9 @@ import { MulterModule } from '@nestjs/platform-express';
 import multer from 'multer';
 import { UserGatewayController } from './modules/user/user-gateway.controller';
 import { UserProfileGatewayController } from './modules/user/user-profile-gateway.controller';
+import { CompanyGatewayController } from './modules/company/company-gateway.controller';
+import { CompanyMemberController } from 'apps/company/src/controller/company-member.controller';
+import { CompanyInvitationController } from 'apps/company/src/controller/company-invitation.controller';
 
 @Module({
   imports: [
@@ -28,6 +31,7 @@ import { UserProfileGatewayController } from './modules/user/user-profile-gatewa
     RabbitModule.forClientProxy(RabbitServiceName.AUTH),
     RabbitModule.forClientProxy(RabbitServiceName.VEHICLE),
     RabbitModule.forClientProxy(RabbitServiceName.STORAGE),
+    RabbitModule.forClientProxy(RabbitServiceName.COMPANY),
     AuthenticationModule.register(),
     PolicyModule
   ],
@@ -35,7 +39,10 @@ import { UserProfileGatewayController } from './modules/user/user-profile-gatewa
     AuthGatewayController,
     UserGatewayController,
     UserProfileGatewayController,
-    VehicleGatewayController
+    VehicleGatewayController,
+    CompanyGatewayController,
+    CompanyMemberController,
+    CompanyInvitationController
   ]
 })
 export class GatewayModule { }

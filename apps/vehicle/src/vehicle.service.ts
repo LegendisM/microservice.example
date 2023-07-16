@@ -30,20 +30,21 @@ export class VehicleService {
 
   async findAll(findDto: FindVehiclesDto): Promise<IServiceResponse<IPagination<VehicleEntity>>> {
     const { model, isHeavy, plate, color, vin, distance, year, limit, page } = findDto;
+    const where = [
+      (model) ? { model: Like(model) } : null,
+      (isHeavy) ? { isHeavy } : null,
+      (plate) ? { plate: Like(plate) } : null,
+      (color) ? { color } : null,
+      (vin) ? { vin: Like(vin) } : null,
+      (distance) ? { distance } : null,
+      (year) ? { year } : null,
+    ];
     const vehicles = await this.vehicleRepository.find({
-      where: [
-        (model) ? { model: Like(model) } : null,
-        (isHeavy) ? { isHeavy } : null,
-        (plate) ? { plate: Like(plate) } : null,
-        (color) ? { color } : null,
-        (vin) ? { vin: Like(vin) } : null,
-        (distance) ? { distance } : null,
-        (year) ? { year } : null,
-      ],
+      where: where,
       skip: (page - 1) * limit,
       take: limit - 1
     });
-    const vehiclesCount = await this.vehicleRepository.count();
+    const vehiclesCount = await this.vehicleRepository.count({ where });
     return {
       state: true,
       data: {

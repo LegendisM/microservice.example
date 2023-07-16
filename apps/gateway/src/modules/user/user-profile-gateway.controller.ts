@@ -1,6 +1,6 @@
 import { Auth, CurrentUser } from "@app/authentication";
 import { IServiceResponse, RabbitServiceName } from "@app/rabbit";
-import { Body, Controller, Delete, Inject, Put, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Inject, Patch, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { IGatewayResponse } from "../../common/interface/gateway.interface";
 import { FileInterceptor } from "@nestjs/platform-express";
@@ -13,7 +13,9 @@ import { StorageFileEntity } from "apps/storage/src/entity/storage-file.entity";
 import { CreateStorageFileDto } from "apps/storage/src/dto/create-storage-file.dto";
 import { StorageFileBucket, StorageFileDriverType, StorageFileType } from "apps/storage/src/interface/storage-file.interface";
 import { ParseUploadFilePipe } from "@app/common/pipe/parse-upload-file.pipe";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Profile Gateway')
 @Controller({
     path: '/profiles',
     version: '1'
@@ -25,24 +27,24 @@ export class UserProfileGatewayController {
         @Inject(RabbitServiceName.STORAGE) private storageService: ClientProxy
     ) { }
 
-    @Put('/')
+    @Patch('/')
     async updateProfile(
         @Body() updateDto: UpdateUserDto,
         @CurrentUser('id') userId: string,
     ): Promise<IGatewayResponse> {
         const { state, data } = await firstValueFrom(
-            this.userService.send<IServiceResponse<UserEntity>, { updateDto: UpdateUserDto, userId: string }>(
+            this.userService.send<IServiceResponse<UserEntity>, { id: string, updateDto: UpdateUserDto }>(
                 USER_MESSAGE_PATTERNS.UPDATE,
                 {
-                    updateDto: updateDto,
-                    userId: userId
+                    id: userId,
+                    updateDto: updateDto
                 }
             )
         );
         return { state, data };
     }
 
-    @Put('/avatar')
+    @Patch('/avatar')
     @UseInterceptors(FileInterceptor('avatar'))
     async uploadProfileAvatar(
         @CurrentUser() user: UserEntity,
@@ -65,13 +67,13 @@ export class UserProfileGatewayController {
         );
         if (storageState) {
             const { state: updateState } = await firstValueFrom(
-                this.userService.send<IServiceResponse<UpdateUserDto>, { updateDto: UpdateUserDto, userId: string }>(
+                this.userService.send<IServiceResponse<UpdateUserDto>, { id: string, updateDto: UpdateUserDto }>(
                     USER_MESSAGE_PATTERNS.UPDATE,
                     {
+                        id: user.id,
                         updateDto: {
                             avatar: storageData
-                        },
-                        userId: user.id
+                        }
                     }
                 )
             );
@@ -86,13 +88,13 @@ export class UserProfileGatewayController {
         @CurrentUser('id') userId: string
     ): Promise<IGatewayResponse> {
         const { state } = await firstValueFrom(
-            this.userService.send<IServiceResponse<UserEntity>, { updateDto: UpdateUserDto, userId: string }>(
+            this.userService.send<IServiceResponse<UserEntity>, { id: string, updateDto: UpdateUserDto }>(
                 USER_MESSAGE_PATTERNS.UPDATE,
                 {
+                    id: userId,
                     updateDto: {
                         avatar: null
-                    },
-                    userId: userId
+                    }
                 }
             )
         );

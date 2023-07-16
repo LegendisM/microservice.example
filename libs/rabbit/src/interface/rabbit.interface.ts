@@ -3,5 +3,6 @@ export enum RabbitServiceName {
     AUTH = "AUTH_SERVICE",
     VEHICLE = "VEHICLE_SERVICE",
     OTP = "OTP_SERVICE",
-    STORAGE = "STORAGE_SERVICE"
+    STORAGE = "STORAGE_SERVICE",
+    COMPANY = "COMPANY_SERVICE"
 }

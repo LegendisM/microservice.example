@@ -30,7 +30,7 @@ export class VehicleGatewayController {
     @Get('/')
     @Roles(Role.OWNER, Role.ADMIN)
     async getVehicles(@Query() findDto: FindVehiclesDto): Promise<IGatewayResponse<IPagination<VehicleEntity>>> {
-        const { state, data } = await firstValueFrom(
+        const { state, data: vehicles } = await firstValueFrom(
             this.vehicleClient.send<IServiceResponse<IPagination<VehicleEntity>>, FindVehiclesDto>(
                 VEHICLE_MESSAGE_PATTERNS.FIND_ALL,
                 findDto
@@ -38,13 +38,13 @@ export class VehicleGatewayController {
         );
         return {
             state,
-            data
+            data: vehicles
         }
     }
 
     @Get('/me')
     async getUserVehicles(@CurrentUser() user: UserEntity): Promise<IGatewayResponse<VehicleEntity[]>> {
-        const { state, data } = await firstValueFrom(
+        const { state, data: vehicles } = await firstValueFrom(
             this.vehicleClient.send<IServiceResponse<VehicleEntity[]>, string>(
                 VEHICLE_MESSAGE_PATTERNS.FIND_ALL_BY_USER,
                 user.id
@@ -52,7 +52,7 @@ export class VehicleGatewayController {
         );
         return {
             state,
-            data
+            data: vehicles
         }
     }
 

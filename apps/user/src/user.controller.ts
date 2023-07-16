@@ -36,9 +36,9 @@ export class UserController {
 
   @MessagePattern(USER_MESSAGE_PATTERNS.UPDATE)
   async updateUser(
-    @Payload('updateDto') updateDto: UpdateUserDto,
-    @Payload('userId') userId: string
+    @Payload('id') id: string,
+    @Payload('updateDto') updateDto: UpdateUserDto
   ): Promise<IServiceResponse<UserEntity>> {
-    return await this.userService.update(userId, updateDto);
+    return await this.userService.update(id, updateDto);
   }
 }

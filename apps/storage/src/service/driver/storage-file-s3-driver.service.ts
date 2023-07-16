@@ -23,7 +23,7 @@ export class StorageFileS3DriverService extends StorageFileDriver {
         let state, message;
         const key = _.uniqueId(file.originalname);
 
-        await this.s3Service.putObject({
+        await this.s3Service.PatchObject({
             Bucket: bucket,
             Key: key,
             Body: file.buffer,

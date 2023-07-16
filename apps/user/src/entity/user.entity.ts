@@ -1,7 +1,8 @@
-import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Role } from "../interface/role.interface";
 import { VehicleEntity } from "apps/vehicle/src/entity/vehicle.entity";
 import { StorageFileEntity } from "apps/storage/src/entity/storage-file.entity";
+import { CompanyEntity } from "apps/company/src/entity/company.entity";
 
 @Entity({
     name: 'user'
@@ -43,4 +44,7 @@ export class UserEntity {
 
     @OneToMany(() => StorageFileEntity, (storageFile) => storageFile.user)
     files: StorageFileEntity[];
+
+    @ManyToOne(() => CompanyEntity, (company) => company.members)
+    company: CompanyEntity;
 }
