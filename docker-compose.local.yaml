@@ -47,6 +47,16 @@ services:
       - user
       - primary_db
       - rabbit
+  company:
+    container_name: company_service
+    build:
+      context: .
+      target: development
+      dockerfile: ./apps/company/Dockerfile
+    depends_on:
+      - user
+      - primary_db
+      - rabbit
   otp:
     container_name: otp_service
     build:
